@@ -1,13 +1,20 @@
 from pathlib import Path
+import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-kt=81@6r^^$5o40^m=x$!@6i$njf3@7%+b&xnyg9s4!3zr)u^7'
+SECRET_KEY = os.environ.get('SECRET_KEY') # en esta línea y la de abajo(debug) es como protegemos las variables de ambiente. Metiéndolas en el env de la carpeta core y llamando a esa funcion con el os.environ...
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] #esta estrellita nos dice que podemos usar cualquier host cuando queramos y cambiarle a nuestra página web lo que ahora mismo es 'http://127.0.0.1:8000/'
 
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,6 +23,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'core',
+    'blog',
+    'tailwind',
+    'theme'
+]
+
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
@@ -30,10 +47,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
+
+#en templates vamos a tener todas nuestras html
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # con base_dir estamos apuntando a nuestra barra de tareas y con 'templates' estamos indicando que nos vamos a dirigir a ese directorio, esto es como relacionar uno con el otro
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
