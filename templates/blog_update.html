@@ -1,0 +1,8 @@
+<!-- siempre que hagamos un formulario tenemos que agregar un token csrf_token-->
+<form method="POST"> 
+{% csrf_token %} 
+title{{form.title}}
+<br>
+content{{form.content}}
+<button type="submit">Update</button>
+</form>
